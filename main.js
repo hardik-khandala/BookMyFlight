@@ -23,21 +23,22 @@ async function demo(data) {
         destination.appendChild(op);
     });
 
-    // Add event listeners to update flights on source or destination change
     document.getElementById('Source').addEventListener('change', () => SearchFlight(data));
     document.getElementById('Destinations').addEventListener('change', () => SearchFlight(data));
+    document.getElementById('dte').addEventListener('change', () => SearchFlight(data))
+    document.getElementById('search').addEventListener('input', () => SearchFlight(data));
 
-    // Also call SearchFlight initially to display default results if needed
     SearchFlight(data);
 }
 
 function SearchFlight(data) {
-    const tableBody = document.querySelector('#f-list');
-    tableBody.innerHTML = ""; // Clear previous results
+    const tableBody = document.querySelector('#f-list tbody');
+    tableBody.innerHTML = ""; 
 
     let src = document.getElementById('Source').value;
     let dst = document.getElementById('Destinations').value;
     let date1 = document.getElementById('dte').value;
+    let search = document.getElementById('search').value;
     date1 = new Date(date1);
 
     for (let i = 0; i < data.flights.length; i++) {
@@ -45,10 +46,9 @@ function SearchFlight(data) {
         let dest = data.destinations[data.flights[i].destinationID - 1].name;
         let date2 = new Date(data.flights[i].departureDate);
 
-        // Check if flight matches source, destination, and date
         if ((src == data.flights[i].sourceID || !src) &&
             (dst == data.flights[i].destinationID || !dst) &&
-            date1 <= date2) {
+            date1 <= date2 && (search == data.flights[i].name || !search)){
 
             let row = document.createElement("tr");
             row.innerHTML = `
