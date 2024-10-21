@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookMyFlight</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <navbar id="navbar">
+      
+    </navbar>
+    
+    <div class="container d-flex gap-5">
+      <div class="">
+        <select name="" id="Source">
+          <option value="" selected style="display: none;">Choose Souce</option>
+        </select>
+        <div id="error-src"></div>
+      </div>
+      <div class="">
+        <select name="" id="Destinations">
+          <option value="" selected style="display: none;">Choose Destination</option>
+        </select>
+        <div id="error-dst"></div>
+      </div>
+      <div class="">
+        <input id="dte" type="date" value="2024-01-02" placeholder="DD-MM-YYYY">
+      </div>
+      <div id="date-error">
+      </div>
+      <div class="">
+        <input type="text" name="" id="search" placeholder="Search Flight">
+      </div>
+      <button onclick="Search()"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+      </svg></span></button>
+    </div>
+
+    <div class="table table-striped container">
+      <table class="f-list" id="f-list">
+        <caption class="caption-top">Flight Listing</caption>
+        <thead>
+          <tr>
+            <th>Flight Name</th>
+            <th>Souce Name</th>
+            <th>Destination</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="f-list">
+
+        </tbody>
+      </table>
+    </div>
+    
+    <script type="text/javascript" src="/main.js"></script>
+  </body>
+</html>
