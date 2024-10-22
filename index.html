@@ -61,7 +61,7 @@
     </div>
     
     <div class="container mt-5">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover" id="f-list">
             <caption class="caption-top">Flight Listing</caption>
             <thead class="table-dark">
                 <tr>
@@ -72,7 +72,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody id="f-list">
+            <tbody>
                 
             </tbody>
         </table>
@@ -120,15 +120,19 @@
               <input type="text" class="form-control" id="flightPrice" readonly>
             </div>
             <div class="mb-3">
-              <label for="personName" class="form-label">Your Name</label>
+              <label for="personName" class="form-label">Name of Person</label>
               <input type="text" class="form-control" id="personName" required>
             </div>
             <div class="mb-3">
-              <label for="totalPersons" class="form-label">Total Persons</label>
+              <label for="totalPersons" class="form-label">No of Person</label>
               <input type="number" class="form-control" id="totalPersons" value="1" required>
             </div>
             <div class="mb-3">
-              <label for="totalPrice" class="form-label">Total Price</label>
+              <label for="tax" class="form-label">Tax(10%)</label>
+              <input type="text" class="form-control" id="tax" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="totalPrice" class="form-label">Total Price with Tax</label>
               <input type="text" class="form-control" id="totalPrice" readonly>
             </div>
             <button type="button" class="btn btn-primary" onclick="bookFlight()">Book Flight</button>
@@ -162,7 +166,7 @@
             navigateTo(path);
           };
     </script>
-    <script type="text/javascript" src="/main.js"></script>
+    <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
   </body>
