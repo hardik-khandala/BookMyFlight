@@ -10,54 +10,160 @@
   </head>
   <body>
 
-    <navbar id="navbar">
-      
-    </navbar>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">BookMyFlight</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="navigateTo('home')">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="navigateTo('history')">Booking History</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     
-    <div class="container d-flex gap-5">
-      <div class="">
-        <select name="" id="Source">
-          <option value="" selected style="display: none;">Choose Souce</option>
+      <div id="home">
+
+          <div class="container mt-5">
+              <div class="row g-3 align-items-center">
+                  <div class="col-md-3">
+                      <select class="form-select" id="Source">
+                          <option value="" selected style="display: none;">Choose Source</option>
+                        </select>
+                        <div id="error-src" class="text-danger"></div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="Destinations">
+            <option value="" selected style="display: none;">Choose Destination</option>
         </select>
-        <div id="error-src"></div>
-      </div>
-      <div class="">
-        <select name="" id="Destinations">
-          <option value="" selected style="display: none;">Choose Destination</option>
-        </select>
-        <div id="error-dst"></div>
-      </div>
-      <div class="">
-        <input id="dte" type="date" value="2024-01-02" placeholder="DD-MM-YYYY">
-      </div>
-      <div id="date-error">
-      </div>
-      <div class="">
-        <input type="text" name="" id="search" placeholder="Search Flight">
-      </div>
-      <button onclick="Search()"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-      </svg></span></button>
+        <div id="error-dst" class="text-danger"></div>
     </div>
-
-    <div class="table table-striped container">
-      <table class="f-list" id="f-list">
-        <caption class="caption-top">Flight Listing</caption>
-        <thead>
-          <tr>
-            <th>Flight Name</th>
-            <th>Souce Name</th>
-            <th>Destination</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="f-list">
-
-        </tbody>
-      </table>
+    <div class="col-md-3">
+        <input class="form-control" id="dte" type="date" value="2024-01-02">
+        <div id="date-error" class="text-danger"></div>
+    </div>
+        <div class="col-md-3 d-flex">
+          <input class="form-control me-2" type="text" id="search" placeholder="Search Flight">
+          <button class="btn btn-primary" onclick="Search()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </button>
+    </div>
+      </div>
     </div>
     
+    <div class="container mt-5">
+        <table class="table table-striped table-hover">
+            <caption class="caption-top">Flight Listing</caption>
+            <thead class="table-dark">
+                <tr>
+                    <th>Flight Name</th>
+                    <th>Source Name</th>
+                    <th>Destination</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="f-list">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="history">
+    <div class="container">
+        <div class="container mt-5">
+            <table class="table table-striped table-hover" id="tblHistory">
+                <caption class="caption-top">Booking History</caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th>PNR Number</th>
+                        <th>Flight Name</th>
+                        <th>Total Price</th>
+                        <th>No of Person</th>
+                        <th>Date of Booking</th>
+                        <th>Date of Departure</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="h-list">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookingModalLabel">Book Flight</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="bookingForm">
+            <div class="mb-3">
+              <label for="flightName" class="form-label">Flight Name</label>
+              <input type="text" class="form-control" id="flightName" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="flightPrice" class="form-label">Price</label>
+              <input type="text" class="form-control" id="flightPrice" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="personName" class="form-label">Your Name</label>
+              <input type="text" class="form-control" id="personName" required>
+            </div>
+            <div class="mb-3">
+              <label for="totalPersons" class="form-label">Total Persons</label>
+              <input type="number" class="form-control" id="totalPersons" value="1" required>
+            </div>
+            <div class="mb-3">
+              <label for="totalPrice" class="form-label">Total Price</label>
+              <input type="text" class="form-control" id="totalPrice" readonly>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="bookFlight()">Book Flight</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    <script>
+        function navigateTo(page) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('history').style.display = 'none';
+    
+            if (page === 'home') {
+              document.getElementById('home').style.display = 'block';
+            } else if (page === 'history') {
+              document.getElementById('history').style.display = 'block';
+            }
+
+            history.pushState(null, "", `/${page}`);
+          }
+    
+          window.onpopstate = function(event) {
+            const path = window.location.pathname.replace("/", "");
+            navigateTo(path);
+          };
+
+          window.onload = function() {
+            const path = window.location.pathname.replace("/", "");
+            navigateTo(path);
+          };
+    </script>
     <script type="text/javascript" src="/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
