@@ -56,11 +56,74 @@ function SearchFlight(data) {
                 <td>${souce}</td>
                 <td>${dest}</td>
                 <td>${data.flights[i].price}</td>
-                <td><button>Book</button></td>
+                <td><button class="btn btn-primary" onclick="openBookingModal(${i}, data)">Book</button></td>
             `;
             tableBody.appendChild(row);
         }
     }
+}
+
+function openBookingModal(flightIndex, data) {
+    // Get flight details
+    const flight = data.flights[flightIndex];
+
+    // Populate modal with flight details
+    document.getElementById('flightName').value = flight.name;
+    document.getElementById('flightPrice').value = flight.price;
+    
+    // Reset other fields
+    document.getElementById('personName').value = '';
+    document.getElementById('totalPersons').value = 1;
+    calculateTotalPrice(flight.price);
+
+    // Show the modal
+    const bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+    bookingModal.show();
+
+    // Calculate total price on changing number of persons
+    document.getElementById('totalPersons').addEventListener('input', function() {
+        calculateTotalPrice(flight.price);
+    });
+}
+
+function calculateTotalPrice(pricePerPerson) {
+    const totalPersons = document.getElementById('totalPersons').value;
+    const totalPrice = pricePerPerson * totalPersons;
+    document.getElementById('totalPrice').value = totalPrice;
+}
+
+function bookFlight() {
+    // Get form values
+    const flightName = document.getElementById('flightName').value;
+    const flightPrice = document.getElementById('flightPrice').value;
+    const personName = document.getElementById('personName').value;
+    const totalPersons = document.getElementById('totalPersons').value;
+    const totalPrice = document.getElementById('totalPrice').value;
+
+    if (!personName || totalPersons <= 0) {
+        alert("Please fill in all the details.");
+        return;
+    }
+
+    // Create a booking object
+    const booking = {
+        flightName: flightName,
+        personName: personName,
+        totalPersons: totalPersons,
+        totalPrice: totalPrice
+    };
+
+    // Store booking in localStorage
+    let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    bookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+
+    // Confirmation
+    alert("Flight booked successfully!");
+
+    // Hide the modal
+    const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+    bookingModal.hide();
 }
 
 function Search() {
