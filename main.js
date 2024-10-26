@@ -69,7 +69,8 @@ function openBookingModal(flightIndex, data) {
     document.getElementById('flightName').value = flight.name;
     document.getElementById('flightPrice').value = flight.price;
     document.getElementById('tax').value = flight.price * 0.1;
-    
+    document.getElementById('dateOfFlight').value = flight.departureDate;
+
     document.getElementById('personName').value = '';
     document.getElementById('totalPersons').value = 1;
     calculateTotalPrice(flight.price + (flight.price * 0.1));
@@ -89,14 +90,13 @@ function calculateTotalPrice(pricePerPerson) {
 }
 
 function bookFlight() {
-    // const pnr = 
     const flightName = document.getElementById('flightName').value;
     const flightPrice = document.getElementById('flightPrice').value;
     const personName = document.getElementById('personName').value;
     const totalPersons = document.getElementById('totalPersons').value;
     const totalPrice = document.getElementById('totalPrice').value;
-    const dateofbooking = document.getElementById('').value;
-    const dateofdep = document.getElementById('').value;
+    const dateofbooking = document.getElementById('dte').value;
+    const dateofdep = document.getElementById('dateOfFlight').value;
 
     if (!personName || totalPersons <= 0) {
         alert("Please fill in all the details.");
@@ -104,7 +104,6 @@ function bookFlight() {
     }
 
     const booking = {
-        pnr: pnr,
         flightName: flightName,
         personName: personName,
         totalPersons: totalPersons,
@@ -121,6 +120,30 @@ function bookFlight() {
 
     const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
     bookingModal.hide();
+    bookingHistory();
+}
+
+function bookingHistory(){
+    let tableBodyHistory = document.getElementById('h-list')
+    let bookings = JSON.parse(localStorage.getItem('bookings'))
+    bookings.forEach((ele) => {
+        let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${ele.flightName}</td>
+                <td>${ele.totalPrice}</td>
+                <td>${ele.totalPersons}</td>
+                <td>${ele.dateofbooking}</td>
+                <td>${ele.dateofdep}</td>
+                <td><button class="btn btn-primary" onclick="cancel()">Cancel</button></td>
+            `;
+            tableBodyHistory.appendChild(row);
+
+    })
+}
+bookingHistory();
+
+function cancel(){
+    
 }
 
 function Search() {
