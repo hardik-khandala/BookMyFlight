@@ -104,6 +104,7 @@ function bookFlight() {
     }
 
     const booking = {
+        id: Date.now(), 
         flightName: flightName,
         personName: personName,
         totalPersons: totalPersons,
@@ -123,27 +124,33 @@ function bookFlight() {
     bookingHistory();
 }
 
-function bookingHistory(){
-    let tableBodyHistory = document.getElementById('h-list')
-    let bookings = JSON.parse(localStorage.getItem('bookings'))
+function bookingHistory() {
+    let tableBodyHistory = document.getElementById('h-list');
+    tableBodyHistory.innerHTML = "";
+
+    let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
     bookings.forEach((ele) => {
         let row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${ele.flightName}</td>
-                <td>${ele.totalPrice}</td>
-                <td>${ele.totalPersons}</td>
-                <td>${ele.dateofbooking}</td>
-                <td>${ele.dateofdep}</td>
-                <td><button class="btn btn-primary" onclick="cancel()">Cancel</button></td>
-            `;
-            tableBodyHistory.appendChild(row);
-
-    })
+        row.innerHTML = `
+            <td>${ele.flightName}</td>
+            <td>${ele.totalPrice}</td>
+            <td>${ele.totalPersons}</td>
+            <td>${ele.dateofbooking}</td>
+            <td>${ele.dateofdep}</td>
+            <td><button class="btn btn-primary" onclick="cancel(${ele.id})">Cancel</button></td>
+        `;
+        tableBodyHistory.appendChild(row);
+    });
 }
 bookingHistory();
 
-function cancel(){
-    
+function cancel(bookingId) {
+    let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    bookings = bookings.filter(booking => booking.id !== bookingId); 
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+
+    alert("Booking canceled successfully!");
+    bookingHistory();
 }
 
 function Search() {
